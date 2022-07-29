@@ -50,7 +50,7 @@ async function getHell(request) {
     history.forEach(
       (attempt, i) =>
         (pageContents +=
-          `<h1>Time` +
+          `<h1>Time: ` +
           attempt.timestamp +
           `</h1>
       <h2>Criteria: ` +
