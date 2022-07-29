@@ -1,11 +1,7 @@
 name = "password-purgatory-logger"
-type = "javascript"
 main = "index.js"
 
-account_id = ""
 workers_dev = true
-route = ""
-zone_id = ""
 compatibility_date = "2022-07-24"
 
 kv_namespaces = [
