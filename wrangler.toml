@@ -8,5 +8,5 @@ zone_id = ""
 compatibility_date = "2022-07-24"
 
 kv_namespaces = [
-         { binding = "PASSWORD_PURGATORY", id = "b8fdc719321741e89dbdff5dd26a6712", preview_id = "16eb5cae3508418c875a7f8950e09a68" }
+         { binding = "PASSWORD_PURGATORY", id = "5a31f18ea0c74e8b9dda010373b05e0e", preview_id = "16eb5cae3508418c875a7f8950e09a68" }
 ]
