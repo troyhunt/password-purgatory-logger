@@ -1,5 +1,6 @@
 name = "password-purgatory-logger"
 type = "javascript"
+main = "index.js"
 
 account_id = ""
 workers_dev = true
