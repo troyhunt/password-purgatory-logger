@@ -83,9 +83,11 @@ async function getHell(request) {
     history.forEach(
       (attempt, i) =>
         (pageContents +=
-          `<h1>Time: ` +
-          attempt.timestamp +
-          `</h1>
+          `<h1>Attempt ` +
+          (i + 1) +
+          `: ` +
+          (i == 0 ? 0 : (attempt.timestamp - history[i - 1].timestamp) / 1000) +
+          ` seconds later</h1>
       <h2>Criteria: ` +
           attempt.criteria +
           `</h2>
@@ -94,6 +96,11 @@ async function getHell(request) {
           `</h2>
       `),
     )
+
+    pageContents +=
+      `<p>This exercise burned a total of ` +
+      (history[history.length - 1].timestamp - history[0].timestamp) / 1000 +
+      ` seconds of spammer time</p>`
   }
 
   const html =
