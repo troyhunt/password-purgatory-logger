@@ -13,6 +13,12 @@ async function handleRequest(request) {
 }
 
 async function logHell(request) {
+  // Logging requires an API key to ensure the endpoint isn't abused and used to write garbage to KV
+  const key = request.headers.get('hell-api-key')
+  if (key !== HELL_API_KEY) {
+    return new Response('Incorrect API key', { status: 401 })
+  }
+
   const json = await request.json()
   const id = json.id
 
