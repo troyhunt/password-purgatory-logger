@@ -58,7 +58,6 @@ async function logHell(request) {
         ],
       }),
     })
-
   } else {
     history.push(attempt)
   }
