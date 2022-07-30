@@ -98,6 +98,9 @@ async function getHell(request) {
 
   const html =
     `<!DOCTYPE html>
+    <head>
+      <link href="https://passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
+    </head>
     <html>
       <body>` +
     pageContents +
