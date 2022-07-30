@@ -32,6 +32,33 @@ async function logHell(request) {
 
   if (history === null) {
     history = [attempt]
+
+    // Send an email on the first logged password so we know a new spammer is on the hook
+    send_request = new Request('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        personalizations: [
+          {
+            to: [{ email: TO_EMAIL, name: TO_EMAIL_NAME }],
+          },
+        ],
+        from: {
+          email: FROM_EMAIL,
+          name: FROM_EMAIL_NAME,
+        },
+        subject: 'New spammer hooked!',
+        content: [
+          {
+            type: 'text/plain',
+            value: 'View the log of their painful password attempts here: todo',
+          },
+        ],
+      }),
+    })
+
   } else {
     history.push(attempt)
   }

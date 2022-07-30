@@ -10,3 +10,7 @@ kv_namespaces = [
 
 [vars]
 HELL_API_KEY = "test-dev-key"
+FROM_EMAIL = ""
+FROM_EMAIL_NAME = ""
+TO_EMAIL = ""
+TO_EMAIL_NAME = ""
