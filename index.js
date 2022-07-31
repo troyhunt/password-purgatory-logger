@@ -15,7 +15,7 @@ async function handleRequest(request) {
   }
 }
 
-// HTTP Post
+// HTTP POST
 async function createHell(request) {
   // Logging requires an API key to ensure the endpoint isn't abused and used to write garbage to KV
   const apiKey = request.headers.get('hell-api-key')
@@ -46,7 +46,7 @@ async function createHell(request) {
   })
 }
 
-// HTTP Post
+// HTTP POST
 async function logHell(request) {
   const json = await request.json()
   const kvKey = json.kvKey
@@ -133,7 +133,7 @@ async function logHell(request) {
   })
 }
 
-// HTTP Get
+// HTTP GET
 async function getHell(request) {
   const { searchParams } = new URL(request.url)
   let kvKey = searchParams.get('kvKey')
