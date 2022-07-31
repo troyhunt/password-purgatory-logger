@@ -126,7 +126,10 @@ async function logHell(request) {
   await PASSWORD_PURGATORY.put(kvKey, jsonHistory)
 
   return new Response(jsonHistory, {
-    headers: { 'Content-type': 'application/json;charset=UTF-8' },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-type': 'application/json;charset=UTF-8'
+    }
   })
 }
 
