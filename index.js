@@ -113,7 +113,7 @@ async function logHell(request) {
             type: 'text/plain',
             value:
               'View the log of their painful password attempts here: https://passwordpurgatory.com/get-hell?kvKey=' +
-              kvValue,
+              kvKey,
           },
         ],
       }),
