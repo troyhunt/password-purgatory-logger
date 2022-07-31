@@ -87,12 +87,12 @@ async function logHell(request) {
       body: JSON.stringify({
         personalizations: [
           {
-            to: [{ email: TO_EMAIL, name: TO_EMAIL_NAME }]
-          }
+            to: [{ email: TO_EMAIL, name: TO_EMAIL_NAME }],
+          },
         ],
         from: {
           email: FROM_EMAIL,
-          name: FROM_EMAIL_NAME
+          name: FROM_EMAIL_NAME,
         },
         subject: 'New spammer hooked!',
         content: [
@@ -100,10 +100,10 @@ async function logHell(request) {
             type: 'text/plain',
             value:
               'View the log of their painful password attempts here: https://passwordpurgatory.com/get-hell?kvKey=' +
-              kvValue
-          }
-        ]
-      })
+              kvValue,
+          },
+        ],
+      }),
     })
   }
 
@@ -128,7 +128,7 @@ async function logHell(request) {
   return new Response(jsonHistory, {
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Content-type': 'application/json;charset=UTF-8'
+      'Content-type': 'application/json;charset=UTF-8',
     }
   })
 }
