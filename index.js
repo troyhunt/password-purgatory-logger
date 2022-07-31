@@ -84,9 +84,10 @@ async function getHell(request) {
         (pageContents +=
           `<h1>Attempt ` +
           (i + 1) +
-          `: ` +
-          (i == 0 ? 0 : (attempt.timestamp - history[i - 1].timestamp) / 1000) +
-          ` seconds later</h1>
+          (i == 0
+            ? ``
+            : ` (` + Math.round((attempt.timestamp - history[i - 1].timestamp) / 1000) +  ` seconds later)`) +
+          `</h1>
       <h2>Criteria: ` +
           attempt.criteria +
           `</h2>
@@ -97,9 +98,9 @@ async function getHell(request) {
     )
 
     pageContents +=
-      `<p>This exercise burned a total of ` +
-      (history[history.length - 1].timestamp - history[0].timestamp) / 1000 +
-      ` seconds of spammer time</p>`
+      `<p>Spammer burned a total of ` +
+      Math.round((history[history.length - 1].timestamp - history[0].timestamp) / 1000) +
+      ` seconds in Password Purgatory 😈</p>`
   }
 
   const html =
