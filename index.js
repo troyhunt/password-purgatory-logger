@@ -179,7 +179,7 @@ async function getHell(request) {
         (pageContents +=
           `<li><h2>Attempt ` +
           (i + 1) +
-          (i == 0
+          (i === 0
             ? ``
             : ` (` +
               Math.round(
@@ -188,7 +188,7 @@ async function getHell(request) {
               ` seconds later)`) +
           `</h2>
       <dl><dt>Criteria:</dt> <dd>` +
-          attempt.criteria +
+          (attempt.criteria === '' ? '[none]' : attempt.criteria) +
           `</dd>
       <dt>Password:</dt> <dd>` +
           attempt.password +
