@@ -77,11 +77,13 @@ async function getHell(request) {
   let pageTitle = ''
   let pageDescription = ''
   let pageContents = ''
+  let status = 200
 
   if (history === null) {
     pageTitle = 'Hell Not Found'
     pageDescription = 'No hell with that ID exists'
     pageContents = '<h1>' + pageDescription + '</h1>'
+    status = 404
   } else {
     // This is mostly to make nice Twitter cards for social sharing. Show the last attempt in the meta description as it'll probably be the funniest 🤣
     pageTitle = 'Password Purgatory - Making Life Hell for Spammers'
@@ -148,5 +150,6 @@ async function getHell(request) {
 
   return new Response(html, {
     headers: { 'Content-type': 'text/html;charset=UTF-8' },
+    status: status
   })
 }
