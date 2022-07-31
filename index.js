@@ -223,7 +223,7 @@ async function getHell(request) {
     `">
       <meta name=twitter:creator content="@troyhunt">
       <meta name=twitter:card content="summary_large_image">
-      <link href="https://local.passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
+      <link href="https://passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
       <link rel="icon" href="https://passwordpurgatory.com/favicon.ico" type="image/png" />
     </head>
     <html>
