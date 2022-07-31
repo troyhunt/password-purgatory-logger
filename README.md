@@ -13,3 +13,15 @@ wrangler generate projectname https://github.com/cloudflare/worker-template
 ```
 
 Further documentation for Wrangler can be found [here](https://developers.cloudflare.com/workers/tooling/wrangler).
+
+#### Configuration
+
+Make sure environemnts are configured locally by adding a .dev.vars file as described in [the Wrangler configuration docs](https://developers.cloudflare.com/workers/wrangler/configuration/#local-environments). The vars should include:
+
+```
+HELL_API_KEY = ""
+FROM_EMAIL = ""
+FROM_EMAIL_NAME = ""
+TO_EMAIL = ""
+TO_EMAIL_NAME = ""
+```
