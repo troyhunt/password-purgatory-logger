@@ -146,7 +146,7 @@ async function getHell(request) {
       <body>` +
     pageContents +
     `</body>
-    </html`
+    </html>`
 
   return new Response(html, {
     headers: { 'Content-type': 'text/html;charset=UTF-8' },
