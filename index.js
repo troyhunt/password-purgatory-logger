@@ -92,7 +92,7 @@ async function logHell(request) {
     history = [attempt]
 
     // Send an email on the first logged password so we know a new spammer is on the hook
-    send_request = new Request('https://api.mailchannels.net/tx/v1/send', {
+    fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
