@@ -86,7 +86,7 @@ async function getHell(request) {
     // This is mostly to make nice Twitter cards for social sharing. Show the last attempt in the meta description as it'll probably be the funniest 🤣
     pageTitle = 'Password Purgatory - Making Life Hell for Spammers'
     pageDescription =
-            history[history.length - 1].criteria +
+      history[history.length - 1].criteria +
       ': ' +
       history[history.length - 1].password
 
@@ -97,7 +97,11 @@ async function getHell(request) {
           (i + 1) +
           (i == 0
             ? ``
-            : ` (` + Math.round((attempt.timestamp - history[i - 1].timestamp) / 1000) +  ` seconds later)`) +
+            : ` (` +
+              Math.round(
+                (attempt.timestamp - history[i - 1].timestamp) / 1000,
+              ) +
+              ` seconds later)`) +
           `</h1>
       <h2>Criteria: ` +
           attempt.criteria +
@@ -110,7 +114,9 @@ async function getHell(request) {
 
     pageContents +=
       `<p>Spammer burned a total of ` +
-      Math.round((history[history.length - 1].timestamp - history[0].timestamp) / 1000) +
+      Math.round(
+        (history[history.length - 1].timestamp - history[0].timestamp) / 1000,
+      ) +
       ` seconds in Password Purgatory 😈</p>`
   }
 
@@ -120,7 +126,18 @@ async function getHell(request) {
       <title>` +
     pageTitle +
     `</title>
-      <meta name=description content="` + pageDescription + `">
+      <meta name=description content="` +
+    pageDescription +
+    `">
+      <meta name=twitter:title content="` +
+    pageTitle +
+    `">
+      <meta name=twitter:image content="https://passwordpurgatory.com/logo.jpg">
+      <meta name=twitter:description content="` +
+    pageDescription +
+    `">
+      <meta name=twitter:creator content="@troyhunt">
+      <meta name=twitter:card content="summary_large_image">
       <link href="https://passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
     </head>
     <html>
