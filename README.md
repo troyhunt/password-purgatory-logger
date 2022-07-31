@@ -16,7 +16,7 @@ Further documentation for Wrangler can be found [here](https://developers.cloudf
 
 #### Configuration
 
-Make sure environemnts are configured locally by adding a .dev.vars file as described in [the Wrangler configuration docs](https://developers.cloudflare.com/workers/wrangler/configuration/#local-environments). The vars should include:
+Make sure environments are configured locally by adding a .dev.vars file as described in [the Wrangler configuration docs](https://developers.cloudflare.com/workers/wrangler/configuration/#local-environments). The vars should include:
 
 ```
 HELL_API_KEY = ""
