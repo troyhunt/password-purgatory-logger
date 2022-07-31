@@ -8,7 +8,9 @@ async function handleRequest(request) {
   // Basic routing for each different entry point
   if (pathname === '/create-hell') {
     return createHell(request)
-  } else if (pathname === '/log-hell') {
+  } else if (pathname === '/log-hell' && request.method === 'OPTIONS') {
+    return optionsHell()
+  } else if (pathname === '/log-hell' && request.method === 'POST') {
     return logHell(request)
   } else if (pathname === '/get-hell') {
     return getHell(request)
@@ -43,6 +45,16 @@ async function createHell(request) {
 
   return new Response(jsonData, {
     headers: { 'Content-type': 'application/json;charset=UTF-8' },
+  })
+}
+
+// HTTP OPTIONS
+async function optionsHell() {
+  return new Response('', {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST'
+    },
   })
 }
 
