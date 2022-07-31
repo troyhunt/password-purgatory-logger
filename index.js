@@ -91,11 +91,12 @@ async function getHell(request) {
       history[history.length - 1].criteria +
       ': ' +
       history[history.length - 1].password
+    pageContents = '<h1>Spammer made ' + history.length + ' attempts to create a password that passes crazy criteria</h1><ol>'
 
     history.forEach(
       (attempt, i) =>
         (pageContents +=
-          `<h1>Attempt ` +
+          `<li><h2>Attempt ` +
           (i + 1) +
           (i == 0
             ? ``
@@ -104,18 +105,19 @@ async function getHell(request) {
                 (attempt.timestamp - history[i - 1].timestamp) / 1000,
               ) +
               ` seconds later)`) +
-          `</h1>
-      <h2>Criteria: ` +
+          `</h2>
+      <dl><dt>Criteria:</dt> <dd>` +
           attempt.criteria +
-          `</h2>
-      <h2>Password: ` +
+          `</dd>
+      <dt>Password:</dt> <dd>` +
           attempt.password +
-          `</h2>
+          `</dd></dl></li>
       `),
     )
 
     pageContents +=
-      `<p>Spammer burned a total of ` +
+      `</ol>
+      <p class="spammer-hell-summary">Spammer burned a total of ` +
       Math.round(
         (history[history.length - 1].timestamp - history[0].timestamp) / 1000,
       ) +
