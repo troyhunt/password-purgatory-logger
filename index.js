@@ -74,11 +74,22 @@ async function getHell(request) {
   const { searchParams } = new URL(request.url)
   let id = searchParams.get('id')
   let history = await PASSWORD_PURGATORY.get(id, { type: 'json' })
+  let pageTitle = ''
+  let pageDescription = ''
   let pageContents = ''
 
   if (history === null) {
-    pageContents = '<h1>No hell with that ID exists</h1>'
+    pageTitle = 'Hell Not Found'
+    pageDescription = 'No hell with that ID exists'
+    pageContents = '<h1>' + pageDescription + '</h1>'
   } else {
+    // This is mostly to make nice Twitter cards for social sharing. Show the last attempt in the meta description as it'll probably be the funniest 🤣
+    pageTitle = 'Password Purgatory - Making Life Hell for Spammers'
+    pageDescription =
+            history[history.length - 1].criteria +
+      ': ' +
+      history[history.length - 1].password
+
     history.forEach(
       (attempt, i) =>
         (pageContents +=
@@ -106,6 +117,10 @@ async function getHell(request) {
   const html =
     `<!DOCTYPE html>
     <head>
+      <title>` +
+    pageTitle +
+    `</title>
+      <meta name=description content="` + pageDescription + `">
       <link href="https://passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
     </head>
     <html>
