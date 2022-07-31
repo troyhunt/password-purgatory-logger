@@ -132,7 +132,7 @@ async function getHell(request) {
       <meta name=twitter:title content="` +
     pageTitle +
     `">
-      <meta name=twitter:image content="https://passwordpurgatory.com/logo.jpg">
+      <meta name=twitter:image content="https://passwordpurgatory.com/logo-social.jpg">
       <meta name=twitter:description content="` +
     pageDescription +
     `">
