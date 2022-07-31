@@ -23,8 +23,8 @@ async function createHell(request) {
     return new Response('Incorrect API key', { status: 401 })
   }
 
-  // Now that the request is authenticated, create a key, store it in KV and return it so it can be used for future logging
-  // The key will be a GUID
+  // Now that the request is authenticated, create a key, store it in KV and return it so it can be
+  // used for future logging. The key will be a GUID.
   const kvKey = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
     (
       c ^
@@ -119,6 +119,7 @@ async function logHell(request) {
     }
   }
 
+  // Save the history back to KV
   const jsonHistory = JSON.stringify(history)
   await PASSWORD_PURGATORY.put(kvKey, jsonHistory)
 
@@ -143,7 +144,8 @@ async function getHell(request) {
     pageContents = '<h1>' + pageDescription + '</h1>'
     status = 404
   } else {
-    // This is mostly to make nice Twitter cards for social sharing. Show the last attempt in the meta description as it'll probably be the funniest 🤣
+    // This is mostly to make nice Twitter cards for social sharing. Show the last attempt in the
+    // meta description as it'll probably be the funniest 🤣
     pageTitle = 'Password Purgatory - Making Life Hell for Spammers'
     pageDescription =
       history[history.length - 1].criteria +
