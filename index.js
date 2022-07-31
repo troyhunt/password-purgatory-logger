@@ -108,7 +108,15 @@ async function logHell(request) {
   // The key exists and there's already at least one password been logged
   else {
     history = JSON.parse(kvValue)
-    history.push(attempt)
+
+    // Because I want to share the password attempts publicly, there needs to be a cut-off time; I
+    // don't want to look at a bunch of password attempts, conclude they're fine to share publicly
+    // then have a *new* entry added that's inappropriate for public consumption, for example
+    // because it may contain PII. As such, only attempts within 15 mins of the first one will be
+    // recorded.
+    if ((new Date().getTime() - history[0].timestamp) / 1000 / 60 < 15) {
+      history.push(attempt)
+    }
   }
 
   const jsonHistory = JSON.stringify(history)
