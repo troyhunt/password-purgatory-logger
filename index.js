@@ -5,22 +5,68 @@ addEventListener('fetch', (event) => {
 async function handleRequest(request) {
   const pathname = new URL(request.url).pathname
 
-  if (pathname === '/log-hell') {
+  // Basic routing for each different entry point
+  if (pathname === '/create-hell') {
+    return createHell(request)
+  } else if (pathname === '/log-hell') {
     return logHell(request)
   } else if (pathname === '/get-hell') {
     return getHell(request)
   }
 }
 
-async function logHell(request) {
+// HTTP Post
+async function createHell(request) {
   // Logging requires an API key to ensure the endpoint isn't abused and used to write garbage to KV
-  const key = request.headers.get('hell-api-key')
-  if (key !== HELL_API_KEY) {
+  const apiKey = request.headers.get('hell-api-key')
+  if (apiKey !== HELL_API_KEY) {
     return new Response('Incorrect API key', { status: 401 })
   }
 
+  // Now that the request is authenticated, create a key, store it in KV and return it so it can be used for future logging
+  // The key will be a GUID
+  const kvKey = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16),
+  )
+
+  // There won't be a value yet, that will come later when passwords are logged
+  await PASSWORD_PURGATORY.put(kvKey, '')
+
+  const data = {
+    kvKey: kvKey,
+  }
+
+  const jsonData = JSON.stringify(data)
+
+  return new Response(jsonData, {
+    headers: { 'Content-type': 'application/json;charset=UTF-8' },
+  })
+}
+
+// HTTP Post
+async function logHell(request) {
   const json = await request.json()
-  const id = json.id
+  const kvKey = json.kvKey
+
+  let kvValue = await PASSWORD_PURGATORY.get(kvKey)
+  let history = ''
+
+  // The key doesn't exist which means an invalid value has been passed
+  if (kvValue === null) {
+    const data = {
+      message: 'kvKey "' + kvKey + '" doesn\'t exist',
+    }
+
+    const jsonData = JSON.stringify(data)
+
+    return new Response(jsonData, {
+      headers: { 'Content-type': 'application/json;charset=UTF-8' },
+      status: 404,
+    })
+  }
 
   const attempt = {
     timestamp: new Date().getTime(),
@@ -28,9 +74,8 @@ async function logHell(request) {
     password: json.password,
   }
 
-  let history = await PASSWORD_PURGATORY.get(id, { type: 'json' })
-
-  if (history === null) {
+  // The key exists but there's no history yet so this is the first password to be logged
+  if (kvValue === '') {
     history = [attempt]
 
     // Send an email on the first logged password so we know a new spammer is on the hook
@@ -58,22 +103,27 @@ async function logHell(request) {
         ],
       }),
     })
-  } else {
+  }
+
+  // The key exists and there's already at least one password been logged
+  else {
+    history = JSON.parse(kvValue)
     history.push(attempt)
   }
 
   const jsonHistory = JSON.stringify(history)
-  await PASSWORD_PURGATORY.put(id, jsonHistory)
+  await PASSWORD_PURGATORY.put(kvKey, jsonHistory)
 
   return new Response(jsonHistory, {
     headers: { 'Content-type': 'application/json;charset=UTF-8' },
   })
 }
 
+// HTTP Get
 async function getHell(request) {
   const { searchParams } = new URL(request.url)
-  let id = searchParams.get('id')
-  let history = await PASSWORD_PURGATORY.get(id, { type: 'json' })
+  let kvKey = searchParams.get('kvKey')
+  let history = await PASSWORD_PURGATORY.get(kvKey, { type: 'json' })
   let pageTitle = ''
   let pageDescription = ''
   let pageContents = ''
@@ -81,7 +131,7 @@ async function getHell(request) {
 
   if (history === null) {
     pageTitle = 'Hell Not Found'
-    pageDescription = 'No hell with that ID exists'
+    pageDescription = 'No hell with that kvKey exists'
     pageContents = '<h1>' + pageDescription + '</h1>'
     status = 404
   } else {
@@ -91,7 +141,10 @@ async function getHell(request) {
       history[history.length - 1].criteria +
       ': ' +
       history[history.length - 1].password
-    pageContents = '<h1>Spammer made ' + history.length + ' attempts to create a password that passes crazy criteria</h1><ol>'
+    pageContents =
+      '<h1>Spammer made ' +
+      history.length +
+      ' attempts to create a password that passes crazy criteria</h1><ol>'
 
     history.forEach(
       (attempt, i) =>
@@ -142,7 +195,7 @@ async function getHell(request) {
     `">
       <meta name=twitter:creator content="@troyhunt">
       <meta name=twitter:card content="summary_large_image">
-      <link href="https://passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
+      <link href="https://local.passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
       <link rel="icon" href="https://passwordpurgatory.com/favicon.ico" type="image/png" />
     </head>
     <html>
@@ -153,6 +206,6 @@ async function getHell(request) {
 
   return new Response(html, {
     headers: { 'Content-type': 'text/html;charset=UTF-8' },
-    status: status
+    status: status,
   })
 }
