@@ -98,7 +98,9 @@ async function logHell(request) {
         content: [
           {
             type: 'text/plain',
-            value: 'View the log of their painful password attempts here: todo',
+            value:
+              'View the log of their painful password attempts here: https://passwordpurgatory.com/get-hell?kvKey=' +
+              kvValue,
           },
         ],
       }),
