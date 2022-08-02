@@ -231,7 +231,8 @@ async function getHell(request) {
     <html>
       <body>` +
     pageContents +
-    `</body>
+    `<p>A <a href="">troyhunt.com</a> project <a href="https://troyhunt.com/sending-spammers-to-password-purgatory-with-microsoft-power-automate-and-cloudflare-workers-kv">designed to antagonise spammers</a>.</p>
+    </body>
     </html>`
 
   return new Response(html, {
