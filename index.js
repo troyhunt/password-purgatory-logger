@@ -225,6 +225,7 @@ async function getHell(request) {
     `">
       <meta name=twitter:creator content="@troyhunt">
       <meta name=twitter:card content="summary_large_image">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
       <link href="https://passwordpurgatory.com/make-hell-pretty.css" rel="stylesheet" />
       <link rel="icon" href="https://passwordpurgatory.com/favicon.ico" type="image/png" />
     </head>
