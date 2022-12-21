@@ -24,4 +24,5 @@ FROM_EMAIL = ""
 FROM_EMAIL_NAME = ""
 TO_EMAIL = ""
 TO_EMAIL_NAME = ""
+LOGGER_DOMAIN = ""
 ```
