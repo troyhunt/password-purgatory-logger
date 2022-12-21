@@ -107,7 +107,7 @@ async function logHell(request) {
         {
           type: 'text/plain',
           value:
-            'View the log of their painful password attempts here: ' + LOGGER_DOMAIN ?? "https://passwordpurgatory.com" + '/get-hell?kvKey=' +
+            'View the log of their painful password attempts here: ' + LOGGER_DOMAIN != null ? LOGGER_DOMAIN : "https://passwordpurgatory.com" + '/get-hell?kvKey=' +
             kvKey,
         },
       ],
