@@ -168,9 +168,9 @@ async function getHell(request) {
     // meta description as it'll probably be the funniest 🤣
     pageTitle = 'Password Purgatory - Making Life Hell for Spammers'
     pageDescription =
-      history[history.length - 1].criteria +
+      escapeHtml(history[history.length - 1].criteria) +
       ': ' +
-      history[history.length - 1].password
+      escapeHtml(history[history.length - 1].password)
     pageContents =
       '<h1>Spammer made ' +
       history.length +
@@ -190,10 +190,10 @@ async function getHell(request) {
               ` seconds later)`) +
           `</h2>
       <dl><dt>Criteria:</dt> <dd>` +
-          (attempt.criteria === '' ? '[none]' : attempt.criteria) +
+          (escapeHtml(attempt.criteria) === '' ? '[none]' : escapeHtml(attempt.criteria)) +
           `</dd>
       <dt>Password:</dt> <dd>` +
-          attempt.password +
+      escapeHtml(attempt.password) +
           `</dd></dl></li>
       `),
     )
@@ -239,5 +239,22 @@ async function getHell(request) {
   return new Response(html, {
     headers: { 'Content-type': 'text/html;charset=UTF-8' },
     status: status,
+  })
+}
+
+const htmlEntityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '`': '&#96;',
+  '/': '&#x2F;',
+}
+
+function escapeHtml (str) {
+  const r = /[&<>"'`=\/]/g
+  return str.replace(r, (s) => {
+    return htmlEntityMap[s]
   })
 }
