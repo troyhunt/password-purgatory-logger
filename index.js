@@ -253,7 +253,7 @@ const htmlEntityMap = {
 }
 
 function escapeHtml (str) {
-  const r = /[&<>"'`=\/]/g
+  const r = /[&<>"'`\/]/g
   return str.replace(r, (s) => {
     return htmlEntityMap[s]
   })
