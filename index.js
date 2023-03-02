@@ -232,7 +232,7 @@ async function getHell(request) {
     <html>
       <body>` +
     pageContents +
-    `<p>A <a href="">troyhunt.com</a> project <a href="https://troyhunt.com/sending-spammers-to-password-purgatory-with-microsoft-power-automate-and-cloudflare-workers-kv">designed to antagonise spammers</a>.</p>
+    `<p>A <a href="https://troyhunt.com">troyhunt.com</a> project <a href="https://troyhunt.com/sending-spammers-to-password-purgatory-with-microsoft-power-automate-and-cloudflare-workers-kv">designed to antagonise spammers</a>.</p>
     </body>
     </html>`
 
